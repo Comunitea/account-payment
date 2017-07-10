@@ -68,7 +68,8 @@ class AccountInvoice(models.Model):
     initial_payment_type = fields.Selection([
             ('percent', 'Percent'),
             ('fixed', 'Fixed Amount')],
-        string='Type', required=False, default='percent', readonly=True,
+        string='Initial Payment Type', required=False, default='percent',
+        readonly=True,
         states={'draft': [('readonly', False)]},
         help="Select here the kind of valuation related to first payment term "
              "line.")
