@@ -13,6 +13,7 @@
     'license': 'AGPL-3',
     "depends": [
         'account',
+        'account_due_list'
     ],
     "data": [
         'views/payment_view.xml',
