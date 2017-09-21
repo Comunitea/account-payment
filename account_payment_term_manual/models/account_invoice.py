@@ -6,6 +6,7 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 import odoo.addons.decimal_precision as dp
+from datetime import timedelta
 
 
 
@@ -45,14 +46,21 @@ class AccountPaymentTerm(models.Model):
                 result[0].append((date_ref, first_amt))
             res_amt = amount - first_amt
             if res_amt:
+                date_ref = fields.Date.to_string(fields.Date.from_string(
+                    date_ref) + timedelta(
+                    days=30))
                 if nop < 2:
                     raise UserError(
                         _('Wrong number of payments. Please correct '
                           'it in Invoice'))
                 line_amt = round(res_amt / (nop-1), prec)
                 for x in range(1, nop-1):
+
                     result[0].append((date_ref, line_amt))
                     res_amt -= line_amt
+                    date_ref = fields.Date.to_string(fields.Date.from_string(
+                        date_ref) + timedelta(
+                        days=30))
             if res_amt:
                 result[0].append((date_ref, res_amt))
         return result
